@@ -1,0 +1,49 @@
+version : "3.9"
+
+services:
+  postgres:
+    image: docker.arvancloud.ir/postgres
+    container_name: postgres
+
+    environment:
+      POSTGRES_USER : postgres
+      POSTGRES_PASSWORD : AliMoayed
+
+    volumes:
+      - postgres_data:/var/lib/postgresql
+
+    networks:
+      - test
+
+
+  pgadmin:
+
+    image: dpage/pgadmin4:snapshot
+    container_name: pgadmin
+
+    depends_on: 
+      - postgres
+
+
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+    ports:
+      - 8080:80
+
+    networks:
+      - test
+
+networks:
+  test:
+    name: test
+    
+volumes:
+    postgres_data:
+    pgadmin_data:
+
+
